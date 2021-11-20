@@ -6,26 +6,46 @@ def main_tank(request):
     bot = telegram.Bot(token=os.environ["TELEGRAM_TOKEN"])
     if request.method == "POST":
         update = telegram.Update.de_json(request.get_json(force=True), bot)
-        chat_id = update.message.chat.id
+
         # Reply with the same message
-        bot.sendMessage(chat_id=chat_id, text=give_a_tank(update.message.text))
+        if update.message:
+            message = update.message
+        else:
+            message = update.edited_message
+        chat_id = message.chat.id
+        bot.sendMessage(chat_id=chat_id, text=give_a_tank(message.text))
         # bot.sendMessage(chat_id=chat_id, text=update.message.text)
     return "okay"
 
 def give_a_tank(text):
-    filename = 'lyrics.txt'
+    filename = 'notlyrics.txt'
     output = []
     with open(filename, "r") as searchfile:
         lines = searchfile.readlines()
         for i,line in enumerate(lines):
-            if text.lower() in line.lower():
-                if lines[i+1] != []:
-                    output.append(lines[i+1])
-                # else:
-    sort_output = list(set(output))
-    index = random.randint(0, len(sort_output)-1)
+            if line is not None:
+                    # if text.lower() in line.lower():
+                if text in line:
+                    try:
+                        if lines[i+1] != []:
+                            output.append(lines[i+1])
+                    except: pass
+
+                        
+            #     if line is not None:
+            #         if text in line:
+            #             if lines[i+1] != []:
+            #                 output.append(lines[i+1])
+
+                    # else:
                 # output.append('error [] string')
     try:
+        sort_output = list(set(output))
+        if len(sort_output) > 1:
+            index = random.randint(0, len(sort_output)-1)
+        else:
+            index = 0
+
         myset = sort_output[index]
         if '[' not in myset:
             return(myset)

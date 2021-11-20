@@ -1,5 +1,6 @@
 import os
 import telegram
+import random
 
 def main_tank(request):
     bot = telegram.Bot(token=os.environ["TELEGRAM_TOKEN"])
@@ -17,13 +18,15 @@ def give_a_tank(text):
     with open(filename, "r") as searchfile:
         lines = searchfile.readlines()
         for i,line in enumerate(lines):
-            if text in line:
+            if text.lower() in line.lower():
                 if lines[i+1] != []:
                     output.append(lines[i+1])
                 # else:
-                    # output.append('error [] string')
+    sort_output = list(set(output))
+    index = random.randint(0, len(sort_output)-1)
+                # output.append('error [] string')
     try:
-        myset = list(set(output))[0]
+        myset = sort_output[index]
         if '[' not in myset:
             return(myset)
         else:

@@ -31,7 +31,7 @@ def give_a_tank(text):
                             output.append(lines[i+1])
                     except: pass
 
-                        
+
             #     if line is not None:
             #         if text in line:
             #             if lines[i+1] != []:

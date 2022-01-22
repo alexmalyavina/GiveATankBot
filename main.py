@@ -6,8 +6,6 @@ def main_tank(request):
     bot = telegram.Bot(token=os.environ["TELEGRAM_TOKEN"])
     if request.method == "POST":
         update = telegram.Update.de_json(request.get_json(force=True), bot)
-
-        # Reply with the same message
         if update.message:
             message = update.message
         else:
@@ -24,21 +22,10 @@ def give_a_tank(text):
         lines = searchfile.readlines()
         for i,line in enumerate(lines):
             if line is not None:
-                    # if text.lower() in line.lower():
-                if text in line:
+                if text.lower() in line.lower():
                     try:
-                        if lines[i+1] != []:
-                            output.append(lines[i+1])
+                        output.append(lines[i+1])
                     except: pass
-
-
-            #     if line is not None:
-            #         if text in line:
-            #             if lines[i+1] != []:
-            #                 output.append(lines[i+1])
-
-                    # else:
-                # output.append('error [] string')
     try:
         sort_output = list(set(output))
         if len(sort_output) > 1:
@@ -47,7 +34,7 @@ def give_a_tank(text):
             index = 0
 
         myset = sort_output[index]
-        if '[' not in myset:
+        if '#' not in myset:
             return(myset)
         else:
             return('Мы переступили черту. Молодости конец')

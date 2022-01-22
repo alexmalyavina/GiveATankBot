@@ -16,7 +16,7 @@ def main_tank(request):
     return "okay"
 
 def give_a_tank(text):
-    filename = 'notlyrics.txt'
+    filename = 'lyrics_3.txt'
     output = []
     with open(filename, "r") as searchfile:
         lines = searchfile.readlines()

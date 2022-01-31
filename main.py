@@ -9,7 +9,7 @@ def main_tank(request):
         if update.message:
             message = update.message
         else:
-            message = update.edited_message
+            message = update.effective_message 
         chat_id = message.chat.id
         bot.sendMessage(chat_id=chat_id, text=give_a_tank(message.text))
         # bot.sendMessage(chat_id=chat_id, text=update.message.text)
